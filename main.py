@@ -14,7 +14,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
 
 if __name__ == "__main__":
-    for filename in os.listdir("./bot-env/cogs"):
+    for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
             bot.load_extension(f"cogs.{filename[:-3]}")
 
