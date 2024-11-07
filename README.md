@@ -23,9 +23,7 @@ The following features are in development. Completed features are checked off.
   A curated feed of programming knowledge to help everyone grow their skills.
 - [ ] **Daily Coding Challenges**  
   Coding exercises to get more practice with our current coursework.
-
-### Advanced Tools
-- [ ] **ChatGPT Code Review (OpenAI API)**  
+- [x] **ChatGPT Code Review (OpenAI API)**  
   AI code reviews to give feedback and suggestions on code quality.
 - [x] **Automated Quizzes**  
   Relevant quizzes to study material covered in our courses.
