@@ -1,4 +1,4 @@
-from models.quiz_questions import QuizQuestion
+from models.quiz.quiz_questions import QuizQuestion
 
 class QuizCategory:
     """

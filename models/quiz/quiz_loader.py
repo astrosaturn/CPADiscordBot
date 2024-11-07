@@ -1,8 +1,8 @@
 import json
 import os
 
-from models.quiz_category import QuizCategory
-from models.quiz_questions import QuizQuestion
+from models.quiz.quiz_category import QuizCategory
+from models.quiz.quiz_questions import QuizQuestion
 
 
 class QuizLoader:

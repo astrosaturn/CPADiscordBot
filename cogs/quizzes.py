@@ -1,9 +1,9 @@
 import disnake
 from disnake.ext import commands
-from models.quiz_loader import QuizLoader
+from models.quiz.quiz_loader import QuizLoader
 from random import randint
 
-from models.quiz_questions import QuizQuestion
+from models.quiz.quiz_questions import QuizQuestion
 
 
 class QuizzesCommand(commands.Cog):
