@@ -49,9 +49,9 @@ Or in the terminal:
 
 Then type your commit message into the text file that opens, make it meaningful so everyone on the project knows what you did and the purpose of your commit. Then save the file and close it.
 
-And finally, `git pr create --base main --title [your message] --body [your message]` to create a pull request for us to review. 
+And finally, `git push` to push your changes to the repo. 
 
-Congratulations! You have now pushed to the repo! Once its reviewed and approved, it will be added to the bot!
+Congratulations! You have now pushed to the repo!
 
 Make sure before you start working, run git pull or press sync in the version control tab to pull everyone else's changes into your workspace.
 
