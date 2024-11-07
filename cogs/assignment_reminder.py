@@ -2,6 +2,8 @@ import disnake
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
 
+# Eric Poroznik
+
 class AssignmentReminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
