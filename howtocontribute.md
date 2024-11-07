@@ -20,7 +20,7 @@ After you have cloned it you now have the bot on your computer!
 
 ## I'm all set up to start, what now?
 
-Now you need to make a .env file. Just make a new file in the /CPADiscordBot called ".env"
+Now you need to make a .env file. Just make a new file in the ./CPADiscordBot directory called ".env"
 
 .env files are special files that are used by developers to hide important information, such as the bot's token (which you can find pinned in general in the development server). This is so people cant open our public repo and yank the token and start using it for nefarious purposes.
 
