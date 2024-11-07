@@ -1,0 +1,202 @@
+{
+    "quizzes": [
+        {
+            "name": "COMP 333",
+            "description": "Object Oriented C++",
+            "quiz_questions": [
+                {
+                    "question": "What is an instance of a class called?",
+                    "options": [
+                        "Object",
+                        "Class",
+                        "Method",
+                        "Variable"
+                    ],
+                    "answer": "Object",
+                    "explanation": "An object is an instance of a class in object-oriented programming."
+                },
+                {
+                    "question": "Where do you define the implementation of a class member function?",
+                    "options": [
+                        "In the specification file (class.h)",
+                        "In the implementation file (class.cpp)",
+                        "In the main program file (source.cpp)",
+                        "In a text file (class.txt)"
+                    ],
+                    "answer": "You define the implementation of a class member function in the implementation file (class.cpp).",
+                    "explanation": "In C++, you typically define the implementation of a class member function in a separate implementation file (e.g., class.cpp) to separate the specification (class.h) from the implementation."
+                },
+                {
+                    "question": "Which of the following options are how you inherit from a class in C++?",
+                    "options": [
+                        "class Derived : public Base",
+                        "class Derived inherits Base",
+                        "class Derived extends Base",
+                        "class Derived : Base"
+                    ],
+                    "answer": "class Derived : public Base",
+                    "explanation": "In C++, you inherit from a class using the syntax class Derived : public Base. The public keyword specifies the access level of the inheritance, which can also be private or protected."
+                }
+            ]
+        },
+        {
+            "name": "COMP 1081",
+            "description": "Operating Systems Linux, z/OS, TSO/ISPF",
+            "quiz_questions": [
+                {
+                    "question": "What is the command to list files in a directory?",
+                    "options": [
+                        "ls",
+                        "dir",
+                        "list",
+                        "show"
+                    ],
+                    "answer": "ls",
+                    "explanation": "The ls (or list) command is used to list files in a directory in Linux."
+                },
+                {
+                    "question": "What is the command to change directory?",
+                    "options": [
+                        "cd",
+                        "chdir",
+                        "change",
+                        "dir"
+                    ],
+                    "answer": "cd",
+                    "explanation": "The cd (or change directory) command is used to change directories in Linux. For example, `cd /home/user` would change to the `/home/user directory.`"
+                },
+                {
+                    "question": "What is the command to create a new directory?",
+                    "options": [
+                        "mkdir",
+                        "newdir",
+                        "create",
+                        "makedir"
+                    ],
+                    "answer": "mkdir",
+                    "explanation": "The mkdir (or make directory) command is used to create a new directory in Linux. For example, `mkdir newdir` would create a directory named `newdir` in the current directory."
+                },
+                {
+                    "question": "What is the command to remove a file?",
+                    "options": [
+                        "rm",
+                        "del",
+                        "remove",
+                        "delete"
+                    ],
+                    "answer": "rm",
+                    "explanation": "The rm (or remove) command is used to remove a file in Linux. For example, `rm file.txt` would remove the file named `file.txt`."
+                },
+                {
+                    "question": "How do you remove a directory and its contents?",
+                    "options": [
+                        "rm -r",
+                        "rmdir",
+                        "remove -r",
+                        "delete -r"
+                    ],
+                    "answer": "rm -r",
+                    "explanation": "The rm -r (or remove recursively) command is used to remove a directory and its contents in Linux. For example, `rm -r directory` would remove the directory named `directory` and all its contents."
+                }
+            ]
+        },
+        {
+            "name": "COMP 220",
+            "description": "PHP Programming",
+            "quiz_questions": [
+                {
+                    "question": "What does PHP stand for?",
+                    "options": [
+                        "Personal Home Page",
+                        "PHP: Hypertext Preprocessor",
+                        "Preprocessed Hypertext Page",
+                        "PHP Hypertext Processor"
+                    ],
+                    "answer": "PHP: Hypertext Preprocessor",
+                    "explanation": "PHP stands for PHP: Hypertext Preprocessor, a recursive acronym, originally meaning Personal Home Page."
+                },
+                {
+                    "question": "How do you print a message to the screen in PHP?",
+                    "options": [
+                        "echo 'Hello World';",
+                        "print 'Hello World';",
+                        "console.log('Hello World');",
+                        "printf('Hello World');"
+                    ],
+                    "answer": "echo 'Hello World';",
+                    "explanation": "In PHP, you can print a message to the screen using the echo statement. For example, `echo 'Hello World';` would output `Hello World` to the screen."
+                },
+                {
+                    "question": "What is the correct way to start a PHP block?",
+                    "options": [
+                        "<?php",
+                        "<?php>",
+                        "<?php{",
+                        "<?php}"
+                    ],
+                    "answer": "<?php",
+                    "explanation": "In PHP, you start a PHP block with the `<?php` tag. For example, `<?php echo 'Hello World'; ?>` would output `Hello World` to the screen."
+                },
+                {
+                    "question": "Which of the following is not a valid PHP variable name?",
+                    "options": [
+                        "$myVar",
+                        "$_myVar",
+                        "$my-var",
+                        "$myVar123"
+                    ],
+                    "answer": "$my-var",
+                    "explanation": "In PHP, variable names must start with a dollar sign ($) followed by a letter or underscore, and can contain letters, numbers, and underscores. Variable names cannot contain hyphens (-)."
+                },
+                {
+                    "question": "How do you convert a string to uppercase in PHP?",
+                    "options": [
+                        "strtoupper()",
+                        "uppercase()",
+                        "to_upper()",
+                        "upper_case()"
+                    ],
+                    "answer": "strtoupper()",
+                    "explanation": "In PHP, you can convert a string to uppercase using the strtoupper() function. For example, `strtoupper('hello')` would return `HELLO`."
+                }
+            ]
+        },
+        {
+            "name": "COMP 206",
+            "description": "Web Programming with Javascript",
+            "quiz_questions": [
+                {
+                    "question": "What is the correct way to include an external JavaScript file in an HTML document?",
+                    "options": [
+                        "<script src='script.js'></script>",
+                        "<link rel='stylesheet' href='script.js'>",
+                        "<script href='script.js'></script>",
+                        "<link rel='script' href='script.js'>"
+                    ],
+                    "answer": "<script src='script.js'></script>",
+                    "explanation": "To include an external JavaScript file in an HTML document, you use the <script> tag with the src attribute pointing to the external file. For example, <script src='script.js'></script>."   
+                },
+                {
+                    "question": "How do you write 'Hello World' to the console in JavaScript?",
+                    "options": [
+                        "console.log('Hello World');",
+                        "print('Hello World');",
+                        "echo('Hello World');",
+                        "write('Hello World');"
+                    ],
+                    "answer": "console.log('Hello World');",
+                    "explanation": "In JavaScript, to print to the console you use the console.log() function. For example, console.log('Hello World'); would output 'Hello World' to the console."
+                },
+                {
+                    "question": "True or false, JavaScript is a case-sensitive language?",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": "True",
+                    "explanation": "JavaScript is a case-sensitive language, meaning that variables, functions, and other identifiers must be written with consistent capitalization."
+                }
+            ]
+        }
+    ]
+}
