@@ -19,5 +19,7 @@ if not os.path.exists('.env'):
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-client = Gravey()
+intents = disnake.Intents.all()
+
+client = Gravey(intents=intents)
 client.run(TOKEN)
