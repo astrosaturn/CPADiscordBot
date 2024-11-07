@@ -7,7 +7,7 @@ After Python is installed, you will need to install the dependencies in the depe
 ## Then message Eric or Julian in the CPA Discord
 We will invite you to our private testing server where you can use the bot privately. We will answer and questions and act as your senior developers, just like in an actual development job. 
 
-## Finally, clone the repository from github
+## Clone the repository from github
 I personally recommend you use Visual Studio Code as github is essentially embedded in VSCode. 
 
 You can clone it one of two ways:
