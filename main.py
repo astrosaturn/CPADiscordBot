@@ -3,10 +3,7 @@ from disnake.ext import commands
 import os
 from dotenv import load_dotenv
 
-
 intents = disnake.Intents.all()
-
-
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
