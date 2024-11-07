@@ -10,8 +10,10 @@ class Gravey(disnake.Client):
         print(f'Message received, {message.author}: {message.content}')
 
 # create .env file if not exists
-with open('.env', 'a') as f:
-    f.write('DISCORD_TOKEN=token_here')
+if not os.path.exists('.env'):
+    with open('.env', 'w') as f:
+        f.write('DISCORD_TOKEN=token_here')
+
 
 # retrieve token from .env file
 load_dotenv()
