@@ -15,8 +15,8 @@ The following features are in development. Completed features are checked off.
   For assignment deadlines, class schedules, and other important dates.
 - [ ] **Assignment Tracker**  
   Monitor assignment's due dates, and send notifications to keep everyone on track.
-  - [ ] **Progress Alerts**  
-    Notify those who haven’t submitted their work as deadlines approach.
+- [ ] **Progress Alerts**  
+  Notify those who haven’t submitted their work as deadlines approach.
 
 ### Educational Tools
 - [ ] **Daily Programming Tips & Resources**  
