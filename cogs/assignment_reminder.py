@@ -15,11 +15,11 @@ class AssignmentReminder(commands.Cog):
 
     @commands.slash_command(description="Set a reminder for an assignment (YYYY-MM-DD HH:MM)")
     async def remind(
-        self,
-        interaction: disnake.ApplicationCommandInteraction,
-        name: str,
-        due_date: str = None,  # format: YYYY-MM-DD
-        time: str = None       # format: HH:MM
+            self,
+            interaction: disnake.ApplicationCommandInteraction,
+            name: str,
+            due_date: str = None,  # format: YYYY-MM-DD
+            time: str = None  # format: HH:MM
     ):
         # parse the due date, defaulting to today if not provided
         if due_date:
@@ -29,7 +29,7 @@ class AssignmentReminder(commands.Cog):
                 await interaction.response.send_message("Invalid date format. Use `YYYY-MM-DD`.")
                 return
         else:
-            due_date_obj = datetime.now().date()  
+            due_date_obj = datetime.now().date()
 
         # parse the time, defaulting to the current time if not provided
         if time:
@@ -84,7 +84,8 @@ class AssignmentReminder(commands.Cog):
 
     @check_reminders.before_loop
     async def before_check_reminders(self):
-        await self.bot.wait_until_ready()  
+        await self.bot.wait_until_ready()
+
 
 def setup(bot):
     bot.add_cog(AssignmentReminder(bot))
