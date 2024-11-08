@@ -1,8 +1,8 @@
 import disnake
-from disnake.ext import commands
+from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
 
-from management.tracker_manager import create
+# from management.tracker_manager import create (julian: this is causing a runtime error, commenting for now)
 
 # Eric Poroznik
 
@@ -13,8 +13,6 @@ class AssignmentTracker(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
-        
-
 
     """
     JSON Format:
@@ -46,3 +44,6 @@ class AssignmentTracker(commands.Cog):
     @tasks.loop(minutes=1)
     async def checktracker(self):
         now = datetime.now()
+
+def setup(bot):
+    bot.add_cog(AssignmentTracker(bot))

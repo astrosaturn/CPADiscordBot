@@ -11,7 +11,16 @@ from dotenv import load_dotenv
 from models.db.database import Database
 from models.gpt.gpt_manager import GPTManager
 
-Database.create_engine("sqlite:///data/database.sqlite")
+# retrieve token from .env file
+load_dotenv()
+
+Database.create_engine('sqlite:///data/database.sqlite')
+
+# import db models
+from models.db.models.reminder import Reminder
+from models.db.models.stats import Stats
+
+Database.base.metadata.create_all(Database.engine)
 
 intents = disnake.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -32,9 +41,6 @@ if not os.path.exists('.env'):
     with open('.env', 'w') as f:
         f.write('DISCORD_TOKEN=token_here')
         f.write('GPT_API_KEY=api_key')
-
-# retrieve token from .env file
-load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 GPT_API_KEY = os.getenv('GPT_API_KEY')

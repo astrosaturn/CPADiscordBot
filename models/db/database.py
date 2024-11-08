@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 class Database:
     """
@@ -20,8 +20,7 @@ class Database:
 
         :param db_url: The database URL
         """
-        cls.engine = create_engine(db_url)
-        cls.base.metadata.create_all(cls.engine)
+        cls.engine = create_engine(db_url, echo=True)
 
     @classmethod
     def create_session(cls):

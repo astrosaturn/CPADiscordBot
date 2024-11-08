@@ -2,6 +2,10 @@ import disnake
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
 
+from models.db.database import Database
+from models.db.models.reminder import Reminder
+
+
 # Eric Poroznik
 
 class AssignmentReminder(commands.Cog):
@@ -56,6 +60,11 @@ class AssignmentReminder(commands.Cog):
             "due_datetime": due_datetime,
             "reminder_time": reminder_time
         })
+
+        session = Database.create_session()
+        Reminder.insert(interaction.author.id, interaction.channel_id, name, due_datetime, reminder_time, session)
+        session.close()
+
 
         await interaction.response.send_message(f"Reminder set for assignment '{name}' due on {due_datetime}.")
 

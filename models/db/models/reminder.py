@@ -3,10 +3,10 @@ from datetime import datetime
 from sqlalchemy import Integer, Column, BigInteger, String
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from models.db import database
+from models.db.database import Database
 
 
-class Reminder(database.Database.base):
+class Reminder(Database.base):
     """
     A class for storing reminders in the database as objects, and class methods performing CRUD (create-read-update-delete) operations on them
 

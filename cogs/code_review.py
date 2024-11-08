@@ -2,6 +2,8 @@ import disnake
 from disnake import Option, TextInputStyle
 from disnake.ext import commands
 
+from models.db.database import Database
+from models.db.models.stats import Stats
 from models.gpt.gpt_manager import GPTManager
 
 
@@ -56,6 +58,12 @@ class CodeReviewModal(disnake.ui.Modal):
         your_code = interaction.text_values["your_code"]
 
         review = await generate_code_review(your_code)
+
+        session = Database.create_session()
+        stats = Stats.get_from_user_id(interaction.user.id, session)
+        stats.gptApiCalls += 1
+        session.commit()
+        session.close()
 
         await interaction.response.send_message(review)
 

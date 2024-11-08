@@ -3,6 +3,8 @@ from random import randint
 import disnake
 from disnake.ext import commands
 
+from models.db.database import Database
+from models.db.models.stats import Stats
 from models.gpt.gpt_manager import GPTManager
 
 
@@ -45,6 +47,12 @@ class DailyTip(commands.Cog):
         await inter.response.send_message("Generating daily tip...")
 
         tip = await self.get_daily_tip(course)
+
+        session = Database.create_session()
+        stats = Stats.get_from_user_id(inter.author.id, session)
+        stats.gptApiCalls += 1
+        session.commit()
+        session.close()
 
         await inter.edit_original_message(content=tip)
 
