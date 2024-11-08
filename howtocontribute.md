@@ -35,25 +35,23 @@ B. Open the terminal and type `python main.py`
 If the bot successfully starts, you will get a message telling you that the script has successfully logged on to Gravey!
 
 ## I've written some code, how do I add it to the repository?
-There are two ways to do this, firstly and the simplest:
+We ask that you make a pull request so we can review the code and then bring it into the main repository.
 
-In VSCode look to the left side of your screen, there should be an icon that shows 3 dots connected together. That is the version control tab. Click it.
+How to make a pull request:
 
-After that, you will see a list of all your changes, to commit them press the plus icon to stage them, type a message in the bot and then press "Commit". After that press sync and your changes will be pushed to the repo!
+Open the terminal in Visual Studio Code and do the following:
 
-Or in the terminal:
+Make sure you arent on the main branch, we dont want to make a pull request on the main branch.
+`git checkout -b your-feature-branch`
 
-`git add .` to add all your changes
+Then commit your changes.
+`git add .`
+`git commit -m "Put a descriptive sentence about your changes here"`
 
-`git commit` to commit your changes
+And finally push the changes to your new remote repository.
+`git push origin your-feature-branch`
 
-Then type your commit message into the text file that opens, make it meaningful so everyone on the project knows what you did and the purpose of your commit. Then save the file and close it.
-
-And finally, `git push` to push your changes to the repo. 
-
-Congratulations! You have now pushed to the repo!
-
-Make sure before you start working, run git pull or press sync in the version control tab to pull everyone else's changes into your workspace.
+Either Eric or Julian will review your pull request, and we will give you our thoughts on it, any improvements to be made, then we will pull it into the repo!
 
 ## That should be it! 
 If you have any questions, feel free to ask either me (Eric) or Julian, or just chatgpt it because that works too.
