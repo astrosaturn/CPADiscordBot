@@ -5,7 +5,7 @@ class Tracker:
     This is the tracker's class. This will be used to create trackers in the JSON file.
     
     Methods:
-        create_tracker: creates a tracker and inserts it into the json file
+        create_tracker: creates a tracker and inserts it into the database
 
 
     Attributes:
@@ -32,5 +32,7 @@ class Tracker:
             due_time = "23:59"
 
         tracker_num = self.num_trackers + 1
+
+
 
     

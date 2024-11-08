@@ -10,9 +10,14 @@ class AssignmentTracker(commands.Cog):
     """
     This class creates, displays and manages contents inside the database folder.
 
+    :attribute assignment_name: The name of the assignment to track
+    :attribute date: The due date of the assignment 
     """
     def __init__(self, bot):
         self.bot = bot
+        self.assignment_name
+        self.date
+        self.time
 
     """
     Format:
@@ -23,22 +28,26 @@ class AssignmentTracker(commands.Cog):
     due_date: string
     due_time: optional string
     """
+    ##course:str, name:str, duedate: str, duetime:str = None):
 
     @commands.slash_command(description="Add an assignment to the tracker")
-    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction, course:str, name:str, duedate: str, duetime:str = None):
+    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction, assign_name: str, date: str, time:str = None):
         """
         Adds an assignment to track to the database
 
         :param course: The name of the course the assignment belongs to
         :param name: The assignment's name
-        :param duedate: The calendar date of the assignment's due date
-        :param duetime: The 24hr format of the time the assignment is due
+        :param due_date: The calendar date of the assignment's due date
+        :param due_time: The 24hr format of the time the assignment is due
         """
         courses = disnake.ui.StringSelect(
             custom_id="tracker_course",
             placeholder="Select a course",
             options=["COMP1081", "COMP333", "COMP220", "COMP206"]
         )
+
+        self.assignment_name = assign_name
+
 
         await interaction.response.send_message("Pick a course for the tracker: ", components=[courses] )
 
@@ -53,14 +62,15 @@ class AssignmentTracker(commands.Cog):
         if interaction.component.custom_id != "tracker_course":
             return
         
-        chosen_course = interaction.values[0] # Chose the chosen result
-        
+        chosen_course = interaction.values[0] # Chose the first chosen result
+
+        create_tracker(str(chosen_course), )
 
     
     @commands.slash_command(description="Check for any active assignments due")
     async def viewtrackers(self, interaction: disnake.ApplicationCommandInteraction):
         """
-        Sorts through all active assingments and puts them into an orderly list based on due date
+        Sorts through all active assignments and puts them into an orderly list based on due date
 
         """
 

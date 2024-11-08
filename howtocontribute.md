@@ -4,6 +4,8 @@ That is what this guide will tell you!
 ## First you need to install [Python.](https://www.python.org/downloads/) 
 After Python is installed, you will need to install the dependencies in the dependencies.md file using pip, its just like NPM in COMP206.
 
+I also recommend the Python extension on Visual Studio Code.
+
 ## Then message Eric or Julian in the CPA Discord
 We will invite you to our private testing server where you can use the bot privately. We will answer and questions and act as your senior developers, just like in an actual development job. 
 
