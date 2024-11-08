@@ -3,14 +3,17 @@ from disnake.ext import commands
 import os
 from dotenv import load_dotenv
 
+from models.db.database import Database
 from models.gpt.gpt_manager import GPTManager
 
 intents = disnake.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+
 
 if __name__ == "__main__":
     for filename in os.listdir("./cogs"):
@@ -23,7 +26,6 @@ if not os.path.exists('.env'):
         f.write('DISCORD_TOKEN=token_here')
         f.write('GPT_API_KEY=api_key')
 
-
 # retrieve token from .env file
 load_dotenv()
 
@@ -35,5 +37,7 @@ if TOKEN == 'token_here':
 
 if GPT_API_KEY != 'api_key':
     GPTManager.initialize(GPT_API_KEY)
+
+Database.create_engine("sqlite:///data/database.sqlite")
 
 bot.run(TOKEN)

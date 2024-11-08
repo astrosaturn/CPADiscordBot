@@ -2,6 +2,9 @@ import disnake
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
 
+from models.db.models.reminder import Reminder
+
+
 # Eric Poroznik
 
 class AssignmentReminder(commands.Cog):
@@ -49,6 +52,13 @@ class AssignmentReminder(commands.Cog):
             "reminder_time": reminder_time
         })
 
+        Reminder.insert(
+            discordUserId=interaction.author.id,
+            channelId=interaction.channel_id,
+            name=name,
+            dueDatetime=due_datetime,
+            reminderTime=reminder_time
+        )
         await interaction.response.send_message(f"Reminder set for assignment '{name}' due on {due_datetime}.")
 
     @tasks.loop(minutes=1)
