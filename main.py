@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from models.db.database import Database
 from models.gpt.gpt_manager import GPTManager
+from models.status.status_manager import StatusManager
 
 # retrieve token from .env file
 load_dotenv()
@@ -25,10 +26,23 @@ Database.base.metadata.create_all(Database.engine)
 intents = disnake.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+StatusManager.initialize("data/statuses.json")
 
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+
+    # get guild members
+    members = 0
+
+    for guild in bot.guilds:
+        members += guild.member_count
+
+    # select random status
+    selected_status = StatusManager.get_random_status()
+
+    activity = disnake.Activity(type=disnake.ActivityType.custom,name="placeholder",state=f"{selected_status}")
+    await bot.change_presence(status=disnake.Status.online, activity=activity)
 
 
 if __name__ == "__main__":
