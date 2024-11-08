@@ -4,7 +4,7 @@ from disnake.ext import commands
 
 from models.db.database import Database
 from models.db.models.stats import Stats
-from models.gpt.gpt_manager import GPTManager
+from management.gpt_manager import GPTManager
 
 
 class CodeReview(commands.Cog):

@@ -5,7 +5,7 @@ from disnake.ext import commands
 
 from models.db.database import Database
 from models.db.models.stats import Stats
-from models.gpt.gpt_manager import GPTManager
+from management.gpt_manager import GPTManager
 
 # NOTE: Eric wants to pull tips from an API instead of using GPT-3, so this is a temporary solution
 #       This is a temporary solution, and will be replaced

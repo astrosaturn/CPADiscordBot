@@ -9,8 +9,8 @@ import os
 from dotenv import load_dotenv
 
 from models.db.database import Database
-from models.gpt.gpt_manager import GPTManager
-from models.status.status_manager import StatusManager
+from management.gpt_manager import GPTManager
+from management.status_manager import StatusManager
 
 # retrieve token from .env file
 load_dotenv()

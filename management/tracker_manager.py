@@ -21,6 +21,7 @@ class Tracker:
         self.num_trackers = num_trackers
         self.assignments_file = "data/assignments.json"
 
+    @classmethod
     def create_tracker(self, course_name: str, assignment_name:str, due_date: str, due_time: str = None):
         """
         Create an assignment tracker in the assignments json file
