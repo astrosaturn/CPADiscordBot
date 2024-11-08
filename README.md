@@ -19,7 +19,7 @@ The following features are in development. Completed features are checked off.
   Notify those who haven’t submitted their work as deadlines approach.
 
 ### Educational Tools
-- [ ] **Daily Programming Tips & Resources**  
+- [x] **Daily Programming Tips & Resources**  
   A curated feed of programming knowledge to help everyone grow their skills.
 - [ ] **Daily Coding Challenges**  
   Coding exercises to get more practice with our current coursework.
