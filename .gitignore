@@ -162,3 +162,4 @@ cython_debug/
 bot-env/pyvenv.cfg
 bot-env/Scripts/activate
 /bot-env/Scripts
+data/database.sqlite
