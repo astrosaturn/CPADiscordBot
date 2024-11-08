@@ -22,7 +22,18 @@ After you have cloned it you now have the bot on your computer!
 
 ## I'm all set up to start, what now?
 
-Now you need to make a .env file. Just make a new file in the ./CPADiscordBot directory called ".env"
+First run the terminal, and run `pip install -r requirements.txt`. 
+
+If pip *doesn't work*:
+
+- Rerun the Python installer
+- Click `modify`
+- Click `next`
+- Check `Add to enviornmental variables`
+
+Then click install, restart VSCode, and rerun the command.
+
+Now you need to make a .env file. Just make a new file in the ./CPADiscordBot directory called ".env" or run main.py and it will be created for you.
 
 .env files are special files that are used by developers to hide important information, such as the bot's token (which you can find pinned in general in the development server). This is so people cant open our public repo and yank the token and start using it for nefarious purposes.
 
