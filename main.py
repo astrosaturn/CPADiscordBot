@@ -1,3 +1,8 @@
+"""
+    Gravey Bot - by Eric Poroznik & Julian Seitz
+    A community-driven Discord bot created by students of St. Lawrence College (2023-2026).
+"""
+
 import disnake
 from disnake.ext import commands
 import os
@@ -5,6 +10,8 @@ from dotenv import load_dotenv
 
 from models.db.database import Database
 from models.gpt.gpt_manager import GPTManager
+
+Database.create_engine("sqlite:///data/database.sqlite")
 
 intents = disnake.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -37,7 +44,5 @@ if TOKEN == 'token_here':
 
 if GPT_API_KEY != 'api_key':
     GPTManager.initialize(GPT_API_KEY)
-
-Database.create_engine("sqlite:///data/database.sqlite")
 
 bot.run(TOKEN)

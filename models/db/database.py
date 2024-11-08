@@ -30,8 +30,6 @@ class Database:
 
         :return: The database session
         """
-        Session = sessionmaker(bind=cls.engine)
-        session = Session()
-
-        return session
+        session = sessionmaker(bind=cls.engine)
+        return session()
 

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import Integer, Column, BigInteger, String
 from sqlalchemy.orm import declarative_base, sessionmaker
 
@@ -33,8 +35,22 @@ class Reminder(database.Database.base):
         """
         return f"<Reminder(id={self.id}, discordUserId={self.discordUserId}, channelId={self.channelId}, name={self.name}, dueDatetime={self.dueDatetime}, reminderTime={self.reminderTime})>"
 
+    def getDueDate(self): # will be formatted like: 2024-11-07 19:19:46.936683
+        """
+        Takes the string dueDatetime and returns the date as Python datetime object
+        :return: A Python datetime object of the due date and time
+        """
+        return datetime.strptime(self.dueDatetime, "%Y-%m-%d %H:%M:%S")
+
+    def getReminderTime(self): # will be formatted like: 2024-11-07 19:19:46.936683
+        """
+        Takes the string reminderTime and returns the date as Python datetime object
+        :return: A Python datetime object of the reminder time
+        """
+        return datetime.strptime(self.reminderTime, "%Y-%m-%d %H:%M:%S")
+
     @classmethod
-    def insert(cls, discordUserId, channelId, name, dueDatetime, reminderTime):
+    def insert(cls, discordUserId, channelId, name, dueDatetime, reminderTime, session):
         """
         Insert a new reminder into the database
 
@@ -47,28 +63,39 @@ class Reminder(database.Database.base):
 
         reminder = cls(discordUserId=discordUserId, channelId=channelId, name=name, dueDatetime=dueDatetime, reminderTime=reminderTime)
 
-        session = database.Database.create_session()
         session.add(reminder)
         session.commit()
 
-        session.close()
+        return reminder
 
     @classmethod
-    def get_from_user_id(cls, discordUserId):
+    def get_from_user_id(cls, discordUserId, session):
         """
         Get all reminders from a user ID
 
         :param discordUserId: The discord's user ID
         :return: A list of reminders from the user ID
         """
-        session = database.Database.create_session()
-        reminders = session.query(cls).filter_by(discordUserId=discordUserId).all()
+        reminders = session.query(Reminder).filter_by(discordUserId=discordUserId).all()
 
-        session.close()
         return reminders
 
     @classmethod
-    def get_from_user_id_and_name(cls, discordUserId, name):
+    def get_all(cls, session)->list:
+        """
+        Get all reminders
+
+        :return: A list of all reminders
+        """
+        reminders = session.query(Reminder).all()
+
+        for reminder in reminders:
+            reminder.session = session
+
+        return reminders
+
+    @classmethod
+    def get_from_user_id_and_name(cls, discordUserId, name, session):
         """
         Get a reminder from a user ID and name
 
@@ -76,24 +103,23 @@ class Reminder(database.Database.base):
         :param name: The name of the reminder
         :return: The reminder from the user ID and name
         """
-        session = database.Database.create_session()
-        reminder = session.query(cls).filter_by(discordUserId=discordUserId, name=name).first()
+        reminder = session.query(Reminder).filter_by(discordUserId=discordUserId, name=name).first()
 
-        session.close()
+        if reminder:
+            reminder.session = session
+
         return reminder
 
     @classmethod
-    def delete(cls, discordUserId, name):
+    def delete(cls, discordUserId, name, session):
         """
         Delete a reminder from a user ID and name
 
         :param discordUserId: The discord's user ID
         :param name: The name of the reminder
         """
-        reminder = cls.get_from_user_id_and_name(discordUserId, name)
+        reminder = cls.get_from_user_id_and_name(discordUserId, name, session)
 
         if reminder:
-            session = database.Database.create_session()
             session.delete(reminder)
             session.commit()
-            session.close()

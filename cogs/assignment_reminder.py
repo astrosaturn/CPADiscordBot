@@ -2,6 +2,7 @@ import disnake
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
 
+from models.db.database import Database
 from models.db.models.reminder import Reminder
 
 
@@ -10,7 +11,6 @@ from models.db.models.reminder import Reminder
 class AssignmentReminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.reminders = []  
         self.check_reminders.start()
 
     @commands.slash_command(description="Set a reminder for an assignment (YYYY-MM-DD HH:MM)")
@@ -39,40 +39,38 @@ class AssignmentReminder(commands.Cog):
                 await interaction.response.send_message("Invalid time format. Use `HH:MM`.")
                 return
         else:
-            due_time_obj = datetime.now().time() 
+            due_time_obj = datetime.now().time().replace(second=0, microsecond=0)
 
         due_datetime = datetime.combine(due_date_obj, due_time_obj)
-        reminder_time = due_datetime - timedelta(hours=2) 
+        reminder_time = due_datetime - timedelta(hours=2)
 
-        self.reminders.append({
-            "user": interaction.author.id,
-            "channel": interaction.channel_id,
-            "name": name,
-            "due_datetime": due_datetime,
-            "reminder_time": reminder_time
-        })
+        session = Database.create_session()
 
-        Reminder.insert(
+        new_reminder = Reminder.insert(
             discordUserId=interaction.author.id,
             channelId=interaction.channel_id,
             name=name,
             dueDatetime=due_datetime,
-            reminderTime=reminder_time
+            reminderTime=reminder_time,
+            session=session
         )
+
+        session.close()
         await interaction.response.send_message(f"Reminder set for assignment '{name}' due on {due_datetime}.")
 
     @tasks.loop(minutes=1)
     async def check_reminders(self):
         now = datetime.now()
-        for reminder in self.reminders[:]:  # iterate over list
-            if now >= reminder["reminder_time"]:
-                user = self.bot.get_user(reminder["user"])
-                channel = self.bot.get_channel(reminder["channel"])
+        session = Database.create_session()
+        for reminder in Reminder.get_all(session):  # iterate over list
+            if now >= reminder.getReminderTime():
+                user = self.bot.get_user(reminder.discordUserId)
+                channel = self.bot.get_channel(reminder.channelId)
 
                 if user and channel:
                     embed = disnake.Embed(
-                        title=f"Assignment: {reminder['name']}",
-                        description=f"Due at: {reminder['due_datetime']}",
+                        title=f"Assignment: {reminder.name}",
+                        description=f"Due at: {reminder.dueDatetime}",
                         url="https://blackboard.sl.on.ca/ultra/calendar",
                     )
                     embed.set_author(
@@ -81,7 +79,8 @@ class AssignmentReminder(commands.Cog):
                     )
                     await channel.send(f"{user.mention}", embed=embed)
 
-                self.reminders.remove(reminder)  
+                Reminder.delete(reminder.discordUserId, reminder.name, session)
+        session.close()
 
     @check_reminders.before_loop
     async def before_check_reminders(self):
