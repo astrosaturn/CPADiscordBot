@@ -163,3 +163,4 @@ bot-env/pyvenv.cfg
 bot-env/Scripts/activate
 /bot-env/Scripts
 data/database.sqlite
+/bot-env/Include
