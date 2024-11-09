@@ -34,7 +34,8 @@ class CodeReview(commands.Cog):
 
 class CodeReviewModal(disnake.ui.Modal):
     """
-    A modal for taking a code snippet as input for a code review. The reason we are using this is that it allows for multi-line input.
+    A modal for taking a code snippet as input for a code review.
+    The reason we are using this is that it allows for multi-line input.
     """
 
     def __init__(self):

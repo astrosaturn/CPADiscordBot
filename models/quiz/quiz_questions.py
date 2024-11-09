@@ -12,7 +12,8 @@ class QuizQuestion:
 
     def __init__(self, question:str, options:list[str], answer:str, explanation:str):
         """
-        Initializes the QuizQuestion with a question, set of options, answer (matching an option) and explanation as to why the answer is correct
+        Initializes the QuizQuestion with a question, set of options, answer (matching an option)
+        and explanation as to why the answer is correct
 
         """
 

@@ -31,7 +31,8 @@ class AssignmentTracker(commands.Cog):
     ##course:str, name:str, duedate: str, duetime:str = None):
 
     @commands.slash_command(description="Add an assignment to the tracker")
-    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction, assign_name: str, date: str, time:str = None):
+    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction,
+                           assign_name: str, date: str, time:str = None):
         """
         Adds an assignment to track to the database
 

@@ -23,7 +23,8 @@ class QuizzesCommand(commands.Cog):
     async def quizzes(self, inter: disnake.ApplicationCommandInteraction):
         """
         A slash command that starts a quiz by displaying a dropdown menu of available quiz categories,
-        and then selecting a random question from the chosen category, triggering a view with buttons for each option.
+        and then selecting a random question from the chosen category,
+        triggering a view with buttons for each option.
 
         :param inter: The interaction object from the slash command.
         """
@@ -48,7 +49,8 @@ class QuizzesCommand(commands.Cog):
     @commands.Cog.listener("on_dropdown")
     async def select_callback(self, inter: disnake.MessageInteraction):
         """
-        A listener that listens for dropdown menu interactions, and sends a random quiz question from the selected category.
+        A listener that listens for dropdown menu interactions,
+        and sends a random quiz question from the selected category.
 
         :param inter: The interaction object from the dropdown menu.
         """

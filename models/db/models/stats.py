@@ -13,11 +13,14 @@ class Stats(Database.base):
     gptApiCalls = Column(Integer, default=0)
 
     def __repr__(self):
-        return f"<Stats(id={self.id}, discordUserId={self.discordUserId}, quizzesTaken={self.quizzesTaken}, quizzesGottenCorrect={self.quizzesGottenCorrect}, gptApiCalls={self.gptApiCalls})>"
+        return (f"<Stats(id={self.id}, discordUserId={self.discordUserId}, "
+                f"quizzesTaken={self.quizzesTaken}, quizzesGottenCorrect={self.quizzesGottenCorrect}, "
+                f"gptApiCalls={self.gptApiCalls})>")
 
     @classmethod
     def insert(cls, discordUserId, quizzesTaken, quizzesGottenCorrect, gptApiCalls, session):
-        new_stats = cls(discordUserId=discordUserId, quizzesTaken=quizzesTaken, quizzesGottenCorrect=quizzesGottenCorrect, gptApiCalls=gptApiCalls)
+        new_stats = cls(discordUserId=discordUserId, quizzesTaken=quizzesTaken,
+                        quizzesGottenCorrect=quizzesGottenCorrect, gptApiCalls=gptApiCalls)
         session.add(new_stats)
         session.commit()
         return new_stats
