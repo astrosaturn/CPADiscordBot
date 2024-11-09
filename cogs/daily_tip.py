@@ -30,7 +30,8 @@ class DailyTip(commands.Cog):
         """
 
         if not GPTManager.initialized:
-            await inter.response.send_message("GPTManager has not been initialized, please contact an admin.", ephemeral=True)
+            await inter.response.send_message("GPTManager has not been initialized, please contact an admin.",
+                                              ephemeral=True)
             return
 
         # TODO: Introduce a more dynamic way to get courses, for now, we will use a hardcoded list
@@ -66,7 +67,9 @@ class DailyTip(commands.Cog):
         :return: The generated tip.
         """
 
-        prompt = f"Generate a daily tip for the following subject, this will be sent to a Discord server, format it for Discord, ensure the formatting does not get broken. Keep it concise, under 200 words, just send the tip do not respond this prompt otherwise: {course}"
+        prompt = (f"Generate a daily tip for the following subject, this will be sent to a Discord server, "
+                  f"format it for Discord, ensure the formatting does not get broken. Keep it concise, under 200 words,"
+                  f"just send the tip do not respond this prompt otherwise: {course}")
         tip = await GPTManager.create_prompt(prompt)
 
         return tip

@@ -7,7 +7,8 @@ from models.quiz.quiz_questions import QuizQuestion
 
 class QuizLoader:
     """
-    Class for loading all quizzes from the json file, it will create a json file if it doesn't exist, and parse the json file to get all quizzes.
+    Class for loading all quizzes from the json file, it will create a json file if it doesn't exist,
+    and parse the json file to get all quizzes.
 
     Attributes:
         quiz_file (str): The path to the json file

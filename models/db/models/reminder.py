@@ -8,7 +8,8 @@ from models.db.database import Database
 
 class Reminder(Database.base):
     """
-    A class for storing reminders in the database as objects, and class methods performing CRUD (create-read-update-delete) operations on them
+    A class for storing reminders in the database as objects,
+    and class methods performing CRUD (create-read-update-delete) operations on them
 
     Attributes:
         id (int): The unique identifier of the reminder
@@ -33,7 +34,9 @@ class Reminder(Database.base):
 
         :return: A string representation of the reminder
         """
-        return f"<Reminder(id={self.id}, discordUserId={self.discordUserId}, channelId={self.channelId}, name={self.name}, dueDatetime={self.dueDatetime}, reminderTime={self.reminderTime})>"
+        return (f"<Reminder(id={self.id}, discordUserId={self.discordUserId}, "
+                f"channelId={self.channelId}, name={self.name}, dueDatetime={self.dueDatetime}, "
+                f"reminderTime={self.reminderTime})>")
 
     def getDueDate(self): # will be formatted like: 2024-11-07 19:19:46.936683
         """
@@ -61,7 +64,8 @@ class Reminder(Database.base):
         :param reminderTime: The time to remind the user of the reminder
         """
 
-        reminder = cls(discordUserId=discordUserId, channelId=channelId, name=name, dueDatetime=dueDatetime, reminderTime=reminderTime)
+        reminder = cls(discordUserId=discordUserId, channelId=channelId,
+                       name=name, dueDatetime=dueDatetime, reminderTime=reminderTime)
 
         session.add(reminder)
         session.commit()
