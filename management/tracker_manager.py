@@ -23,7 +23,7 @@ class Tracker:
     no_trackers = 0
 
     @classmethod
-    def create_tracker(self, course_name:str, assignment_name:str, due_date: str, due_time: str = None):
+    def create_tracker(cls, course_name:str, assignment_name:str, due_date: str, due_time: str = None):
         """
         Create an assignment tracker in the database
 
@@ -37,8 +37,8 @@ class Tracker:
         if due_time is None:
             due_time = "23:59"
 
-        self.no_trackers += 1
-        tracker_num = self.no_trackers
+        cls.no_trackers += 1
+        tracker_num = cls.no_trackers
 
 
         print(f"Assignment #{tracker_num} for course {course_name}, {assignment_name} due on {due_date} at {due_time}")
