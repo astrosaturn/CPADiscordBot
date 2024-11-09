@@ -36,7 +36,7 @@ Then click install, restart VSCode, and rerun the command.
 
 Now you need to make a .env file. Just make a new file in the ./CPADiscordBot directory called ".env" or run main.py and it will be created for you.
 
-.env files are special files that are used by developers to hide important information, such as the bot's token (which you can find pinned in general in the development server). This is so people cant open our public repo and yank the token and start using it for nefarious purposes.
+.env files are special files that are used by developers to hide important information, such as the bots token (which you can find pinned in general in the development server). This is so people cant open our public repo and yank the token and start using it for nefarious purposes.
 
 Once you make the .env file, put in `DISCORD_TOKEN = {token}` into the file, replacing {token} with the token from the server, and then run the bot!
 
@@ -55,7 +55,7 @@ How to make a pull request:
 
 Open the terminal in Visual Studio Code and do the following:
 
-Make sure you arent on the main branch, we dont want to make a pull request on the main branch.
+Make sure you aren't on the main branch, we don't want to make a pull request on the main branch.
 `git checkout -b your-feature-branch`
 
 Then commit your changes.
