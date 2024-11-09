@@ -51,7 +51,7 @@ class AssignmentTracker(commands.Cog):
 
         assignment_name = assign_name
         date = i_date
-        time = i_time
+        time = i_time if  i_time is not None else "23:59"
 
         await interaction.response.send_message("Pick a course for the tracker: ", components=[courses] )
 
@@ -65,14 +65,38 @@ class AssignmentTracker(commands.Cog):
         # If for some reason, or somehow, the drop down menu gives us the wrong component, we want to exit early.
         if interaction.component.custom_id != "tracker_course":
             return
-        
+
         chosen_course = interaction.values[0] # Chose the first chosen result
 
-        await interaction.response.send_message(f"{chosen_course} {assignment_name} {date}")
+        # In my opinion, Embeds just look better so lets use an embed here!
+        # -------------------------------------------------------------------------
+        #Initialize the basic attributes of the embed, and create the object.
+        embed = disnake.Embed(
+            title=f"Assignment Tracker successfully created!",
+            description=f"{next(iter(interaction.values))}", # this is stupid
+            color=disnake.Color.green(),
+            timestamp=datetime.now()
+        )
+        #Add the name of the author to the embed, this will just be the user who created it
+        embed.set_author(
+            name = interaction.user.name,
+            icon_url = interaction.user.avatar.url
+        ) 
+        
+        #Use the alarm clock image, because why not?
+        embed.set_image(url="https://cdn3.iconfinder.com/data/icons/simple-microphone-icon/512/Clock_Icon-3-512.png") 
+
+
+        embed.add_field(name="Assignment Name", value=f"{assignment_name}", inline = True)
+        embed.add_field(name="Due Date", value=f"{date}", inline = True)
+        embed.add_field(name="Due Time", value=f"{time}", inline = True)
+
+        #Now, we insert the tracker into the database by sending the data we just created and respond with a success message.
         try:
             Tracker.create_tracker(str(chosen_course), assignment_name, date, time)
-        except Exception as e:
-            print(f"FUCK. {e}")
+            await interaction.response.edit_message("",embed=embed)
+        except Exception as e: # Or an error message.
+            await interaction.response.send_message(embed=disnake.Embed(title="There was an exception:", description=e, color=disnake.Color.red()))
 
 
     

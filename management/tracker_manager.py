@@ -32,10 +32,7 @@ class Tracker:
         :attribute due_date: The date the assignment is due
         :attribute due_time: The time its due at (If none, defaults to 23:59)
         """
-        
-        # We will assume the due time is midnight, as this is the case with most assignments. 
-        if due_time is None:
-            due_time = "23:59"
+    
 
         self.no_trackers += 1
         tracker_num = self.no_trackers
