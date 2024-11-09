@@ -55,7 +55,7 @@ How to make a pull request:
 
 Open the terminal in Visual Studio Code and do the following:
 
-Make sure you arent on the main branch, we dont want to make a pull request on the main branch.
+Make sure you aren't on the main branch, we don't want to make a pull request on the main branch.
 `git checkout -b your-feature-branch`
 
 Then commit your changes.

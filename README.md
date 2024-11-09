@@ -23,7 +23,6 @@ The following features are in development. Completed features are checked off.
 - [ ] **Weekly Recap**
   I'm under the impression Hannah wrote this already if
   not I will add in a minute
-
 ### Educational Tools
 - [x] **Daily Programming Tips & Resources**  
   A curated feed of programming knowledge to help everyone grow their skills.
@@ -34,7 +33,7 @@ The following features are in development. Completed features are checked off.
 - [x] **Automated Quizzes**  
   Relevant quizzes to study material covered in our courses.
 - [ ] **Syntax and Command Cheat Sheets**
-  Will display Syntax and Command cheat sheets.
+  Will display Syntax and Command cheat sheets
 ### Professional Development
 - [ ] **Mock Interview Practice**  
   Potential integration with ChatGPT to simulate technical interviews.
