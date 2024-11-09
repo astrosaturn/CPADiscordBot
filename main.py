@@ -53,8 +53,8 @@ if __name__ == "__main__":
 # create .env file if not exists
 if not os.path.exists('.env'):
     with open('.env', 'w') as f:
-        f.write('DISCORD_TOKEN=token_here')
-        f.write('GPT_API_KEY=api_key')
+        f.write('DISCORD_TOKEN=token_here\n')
+        f.write('GPT_API_KEY=api_key\n')
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 GPT_API_KEY = os.getenv('GPT_API_KEY')
