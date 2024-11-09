@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -31,4 +31,3 @@ class Database:
         """
         session = sessionmaker(bind=cls.engine)
         return session()
-

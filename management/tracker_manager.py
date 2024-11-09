@@ -1,6 +1,21 @@
 from models.db.database import *
 
 
+db_uri = 'sqlite:///data/trackers.sqlite'
+Database.create_engine(db_uri)
+Database.base.metadata.create_all(Database.engine)
+
+
+class TrackerModel(Database.base):
+    __tablename__ = 'trackers'
+
+    id = Column(Integer, primary_key = True, autoincrement=True)
+    tracker_num = Column(Integer, nullable=False)
+    course = Column(String, nullable=False)
+    assignment_name = Column(String, nullable=False)
+    due_date = Column(String, nullable=False)
+    due_time = Column(String, nullable=False)
+
 class Tracker:
     # Eric Poroznik
 
@@ -20,10 +35,12 @@ class Tracker:
         due_time: string | Time it is due, if none is provided it defaults to 23:59/11:59 PM of that day 
 
     """
-    no_trackers = 0
 
+
+
+    no_trackers = 0
     @classmethod
-    def create_tracker(cls, course_name:str, assignment_name:str, due_date: str, due_time: str = None):
+    def create_tracker(self, i_course_name:str, i_assignment_name:str, i_due_date: str, i_due_time: str = None):
         """
         Create an assignment tracker in the database
 
@@ -33,12 +50,40 @@ class Tracker:
         :attribute due_time: The time its due at (If none, defaults to 23:59)
         """
     
+        # Create a tracker number by increasing the current tracker number by one.
+        self.no_trackers += 1
+        tracker_num = self.no_trackers
 
-        cls.no_trackers += 1
-        tracker_num = cls.no_trackers
+        # Create tracker insance
+        new_tracker = TrackerModel(
+            tracker_num=tracker_num,
+            course=i_course_name,
+            assignment_name=i_assignment_name,
+            due_date=i_due_date,
+            due_time=i_due_time
+        )
 
+        # Now create a session for the database.
+        session = Database.create_session()
+        try:
+            session.add(new_tracker)
+            session.commit()
+            print(f"Tracker successfully created for: \nAssignment #{tracker_num} for course {i_course_name}, {i_assignment_name} due on {i_due_date} at {i_due_time}")
+        except Exception as e:
+            session.rollback()
+            print(f"OOPS! Database fucky wucky {e}")
+        finally:
+            session.close()
+        
 
-        print(f"Assignment #{tracker_num} for course {course_name}, {assignment_name} due on {due_date} at {due_time}")
+    
+    @classmethod
+    def delete_tracker(self, tracker_id:int):
+        """
+        Delete an assignment tracker in the database
+
+        :attribute tracker_id: Takes a tracker_id and deletes the tracker where the id is.
+        """
 
 
 

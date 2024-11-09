@@ -51,6 +51,7 @@ class AssignmentTracker(commands.Cog):
 
         assignment_name = assign_name
         date = i_date
+        # Assign the time to midnight if no time is provided
         time = i_time if  i_time is not None else "23:59"
 
         await interaction.response.send_message("Pick a course for the tracker: ", components=[courses] )
