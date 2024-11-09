@@ -2,7 +2,7 @@ import disnake
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
 
-from management.tracker_manager import create_tracker
+from management.tracker_manager import Tracker
 from models.db.database import *
 # Eric Poroznik
 
@@ -15,9 +15,7 @@ class AssignmentTracker(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
-        self.assignment_name
-        self.date
-        self.time
+
 
     """
     Format:
@@ -30,8 +28,9 @@ class AssignmentTracker(commands.Cog):
     """
     ##course:str, name:str, duedate: str, duetime:str = None):
 
+
     @commands.slash_command(description="Add an assignment to the tracker")
-    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction, assign_name: str, date: str, time:str = None):
+    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction, assign_name: str, i_date: str, i_time:str = None):
         """
         Adds an assignment to track to the database
 
@@ -46,8 +45,12 @@ class AssignmentTracker(commands.Cog):
             options=["COMP1081", "COMP333", "COMP220", "COMP206"]
         )
 
-        self.assignment_name = assign_name
+        # Create these global variables so we can use them in both methods, "i" means initial
+        global assignment_name, date, time
 
+        assignment_name = assign_name
+        date = i_date
+        time = i_time
 
         await interaction.response.send_message("Pick a course for the tracker: ", components=[courses] )
 
@@ -64,7 +67,12 @@ class AssignmentTracker(commands.Cog):
         
         chosen_course = interaction.values[0] # Chose the first chosen result
 
-        create_tracker(str(chosen_course), )
+        await interaction.response.send_message(f"{chosen_course} {assignment_name} {date}")
+        try:
+            Tracker.create_tracker(str(chosen_course), assignment_name, date, time)
+        except Exception as e:
+            print(f"FUCK. {e}")
+
 
     
     @commands.slash_command(description="Check for any active assignments due")
