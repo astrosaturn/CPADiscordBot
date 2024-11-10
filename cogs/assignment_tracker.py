@@ -97,7 +97,8 @@ class AssignmentTracker(commands.Cog):
             Tracker.create_tracker(str(chosen_course), assignment_name, date, time)
             await interaction.response.edit_message("",embed=embed)
         except Exception as e: # Or an error message.
-            await interaction.response.send_message(embed=disnake.Embed(title="There was an exception:", description=e, color=disnake.Color.red()))
+            await interaction.response.send_message(embed=disnake.Embed(title="There was an exception:", description=e, 
+                                                                                color=disnake.Color.red()), ephemeral=True)
 
 
     
@@ -107,6 +108,26 @@ class AssignmentTracker(commands.Cog):
         Sorts through all active assignments and puts them into an orderly list based on due date
 
         """
+
+    @commands.slash_command(description="Deletes a tracker based on ID")
+    async def deletetracker(self, interaction: disnake.ApplicationCommandInteraction, tracker_id: int):
+        """
+        Takes a tracker ID, sorts through the database using the ID, and deletes the associated tracker.
+        
+        :assign interaction: The interaction object
+        :assign tracker_id: The tracker's ID that we will use to delete it
+        """
+        if tracker_id < 0 or tracker_id is None:
+            await interaction.response.send_message("Tracker ID is invalid! Please input a valid number!", ephemeral=True)
+
+
+        # Now, lets attempt to delete the tracker
+        try:
+            Tracker.delete_tracker(tracker_id)
+            await interaction.response.send_message("Tracker successfully deleted")
+        except Exception as e:
+            await interaction.response.send_message(f"There was an exception! {e}", ephemeral=True)
+        
 
     @tasks.loop(minutes=1)
     async def checktracker(self):
