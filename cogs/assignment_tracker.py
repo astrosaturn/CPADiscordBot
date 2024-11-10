@@ -42,9 +42,12 @@ class AssignmentTracker(commands.Cog):
         :param due_date: The calendar date of the assignment's due date
         :param due_time: The 24hr format of the time the assignment is due
         """
+
+        # Pull courses from the JSON file
         with open('data/courses.json', 'r') as file:
             data = json.load(file)
 
+        # Put the courses into a list, or default to an empty list
         course_list = data.get('course', [])
 
         courses = disnake.ui.StringSelect(
