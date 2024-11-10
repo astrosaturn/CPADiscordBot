@@ -13,8 +13,6 @@ class Tracker:
 
 
     Attributes:
-        no_trackers: int | Number of current trackers
-        tracker_num: int | A tracker's ID so we can track the tracker
         course: string | Name of the assignment's course
         assignment_name: string | Name of the assignment
         due_date: string | Day it is due
@@ -36,24 +34,29 @@ class Tracker:
         :attribute due_time: The time its due at (If none, defaults to 23:59)
         """
     
-        # Create a tracker number by increasing the current tracker number by one.
-        self.no_trackers += 1
-        tracker_id = self.no_trackers
 
         # Now create a session for the database.
         session = Database.create_session()
         try:
-            TrackerModel.insert(tracker_id, i_course_name, i_assignment_name, i_due_date, i_due_time, session)
+            TrackerModel.insert(i_course_name, i_assignment_name, i_due_date, i_due_time, session)
             session.commit()
-            print(f"Tracker successfully created for: \nAssignment #{tracker_id} for course {i_course_name}, {i_assignment_name} due on {i_due_date} at {i_due_time}")
+            print(f"Tracker successfully created for: {i_course_name}, {i_assignment_name} due on {i_due_date} at {i_due_time}")
         except Exception as e:
             session.rollback()
             print(f"OOPS! Database fucky wucky {e}")
         finally:
             session.close()
         
+    @classmethod
+    def get_all_trackers(self):
+        """
+        Retrieves all trackers from the database and returns them in a list.
+        """
+        session = Database.create_session()
 
-    
+
+
+
     @classmethod
     def delete_tracker(self, tracker_id:int):
         """

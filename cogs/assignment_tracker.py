@@ -1,6 +1,8 @@
-import disnake
+import disnake, json
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
+
+
 
 from management.tracker_manager import Tracker
 from models.db.database import *
@@ -15,7 +17,7 @@ class AssignmentTracker(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
-
+   
 
     """
     Format:
@@ -40,10 +42,15 @@ class AssignmentTracker(commands.Cog):
         :param due_date: The calendar date of the assignment's due date
         :param due_time: The 24hr format of the time the assignment is due
         """
+        with open('data/courses.json', 'r') as file:
+            data = json.load(file)
+
+        course_list = data.get('course', [])
+
         courses = disnake.ui.StringSelect(
             custom_id="tracker_course",
             placeholder="Select a course",
-            options=["COMP1081", "COMP333", "COMP220", "COMP206"]
+            options=course_list
         )
 
         # Create these global variables so we can use them in both methods, "i" means initial
@@ -67,7 +74,7 @@ class AssignmentTracker(commands.Cog):
         if interaction.component.custom_id != "tracker_course":
             return
 
-        chosen_course = interaction.values[0] # Chose the first chosen result
+        chosen_course = interaction.values[0] # Choose the first chosen result
 
         # In my opinion, Embeds just look better so lets use an embed here!
         # -------------------------------------------------------------------------
