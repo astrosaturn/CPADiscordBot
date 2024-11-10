@@ -21,8 +21,8 @@ The following features are in development. Completed features are checked off.
   Allows people to make study groups, allowing
   others to join, plan and remind each other.
 - [ ] **Weekly Recap**
-  I'm under the impression Hannah wrote this already if
-  not I will add in a minute
+  List a weekly recap of committed content to the bot,
+  students felt was important.
 ### Educational Tools
 - [x] **Daily Programming Tips & Resources**  
   A curated feed of programming knowledge to help everyone grow their skills.
