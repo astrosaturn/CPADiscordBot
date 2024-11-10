@@ -59,6 +59,7 @@ class weeklyRecapCommand(commands.Cog):
             # If the course exists, update its recap with the new message.
             self.recap_data[course] = recap  
             # Send a confirmation message back to the user indicating the recap was updated.
+            self.weekly_contributions.append(f"{course}: {recap}")
             await inter.response.send_message(f"Weekly recap for {course} updated!")
         else:
             # If the course is not found in the dictionary, inform the user.
@@ -87,6 +88,19 @@ class weeklyRecapCommand(commands.Cog):
             await channel.send(recap_message)
             
             print("Weekly recap sent!")
+    
+    
+
+    #Write a list function for all current contributions
+    @commands.slash_command(description="lists all current recap content")
+    async def weekly_recap_list(self, inter: disnake.ApplicationCommandInteraction):
+        recap_list_msg = ""
+        for contribution in self.weekly_contributions:
+            recap_list_msg += contribution + "\n"
+        
+        await inter.response.send_message("Here is the weekly recap list:\n\n" + recap_list_msg)
+
+        
 def setup(bot):
     bot.add_cog(weeklyRecapCommand(bot))
 
