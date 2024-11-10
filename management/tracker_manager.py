@@ -1,11 +1,5 @@
 from models.db.database import *
 
-
-db_uri = 'sqlite:///data/trackers.sqlite'
-Database.create_engine(db_uri)
-Database.base.metadata.create_all(Database.engine)
-
-
 class TrackerModel(Database.base):
     __tablename__ = 'trackers'
 
