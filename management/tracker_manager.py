@@ -1,20 +1,12 @@
 from models.db.database import *
+from models.db.models.tracker import TrackerModel
 
-class TrackerModel(Database.base):
-    __tablename__ = 'trackers'
-
-    id = Column(Integer, primary_key = True, autoincrement=True)
-    tracker_num = Column(Integer, nullable=False)
-    course = Column(String, nullable=False)
-    assignment_name = Column(String, nullable=False)
-    due_date = Column(String, nullable=False)
-    due_time = Column(String, nullable=False)
 
 class Tracker:
     # Eric Poroznik
 
     """
-    This is the tracker's class. This will be used to create trackers in the JSON file.
+    This is the tracker's class. This will be used to create trackers in the database .
     
     Methods:
         create_tracker: creates a tracker and inserts it into the database
@@ -46,23 +38,14 @@ class Tracker:
     
         # Create a tracker number by increasing the current tracker number by one.
         self.no_trackers += 1
-        tracker_num = self.no_trackers
-
-        # Create tracker insance
-        new_tracker = TrackerModel(
-            tracker_num=tracker_num,
-            course=i_course_name,
-            assignment_name=i_assignment_name,
-            due_date=i_due_date,
-            due_time=i_due_time
-        )
+        tracker_id = self.no_trackers
 
         # Now create a session for the database.
         session = Database.create_session()
         try:
-            session.add(new_tracker)
+            TrackerModel.insert(tracker_id, i_course_name, i_assignment_name, i_due_date, i_due_time, session)
             session.commit()
-            print(f"Tracker successfully created for: \nAssignment #{tracker_num} for course {i_course_name}, {i_assignment_name} due on {i_due_date} at {i_due_time}")
+            print(f"Tracker successfully created for: \nAssignment #{tracker_id} for course {i_course_name}, {i_assignment_name} due on {i_due_date} at {i_due_time}")
         except Exception as e:
             session.rollback()
             print(f"OOPS! Database fucky wucky {e}")
@@ -78,7 +61,15 @@ class Tracker:
 
         :attribute tracker_id: Takes a tracker_id and deletes the tracker where the id is.
         """
-
+        session = Database.create_session()
+        try:
+            TrackerModel.remove(tracker_id, session)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            print(f"OOPS! Database fucky wucky {e}")
+        finally:
+            session.close()
 
 
     
