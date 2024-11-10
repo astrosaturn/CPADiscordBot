@@ -48,12 +48,17 @@ class Tracker:
             session.close()
         
     @classmethod
-    def get_all_trackers(self):
+    def show_trackers(self):
         """
-        Retrieves all trackers from the database and returns them in a list.
+        Retrieves 10 trackers from the DB in order of due date
         """
         session = Database.create_session()
+        active_trackers = TrackerModel.get_trackers(session)
+        session.commit()
+        session.close()
 
+        return active_trackers
+        
 
 
 
