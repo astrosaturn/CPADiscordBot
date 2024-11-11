@@ -1,6 +1,8 @@
-import disnake
+import disnake, json
 from disnake.ext import commands, tasks
 from datetime import datetime, timedelta
+
+
 
 from management.tracker_manager import Tracker
 from models.db.database import *
@@ -15,8 +17,7 @@ class AssignmentTracker(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
-
-
+   
     """
     Format:
     
@@ -40,10 +41,18 @@ class AssignmentTracker(commands.Cog):
         :param due_date: The calendar date of the assignment's due date
         :param due_time: The 24hr format of the time the assignment is due
         """
+
+        # Pull courses from the JSON file
+        with open('data/courses.json', 'r') as file:
+            data = json.load(file)
+
+        # Put the courses into a list, or default to an empty list
+        course_list = data.get('course', [])
+
         courses = disnake.ui.StringSelect(
             custom_id="tracker_course",
             placeholder="Select a course",
-            options=["COMP1081", "COMP333", "COMP220", "COMP206"]
+            options=course_list
         )
 
         # Create these global variables so we can use them in both methods, "i" means initial
@@ -67,7 +76,7 @@ class AssignmentTracker(commands.Cog):
         if interaction.component.custom_id != "tracker_course":
             return
 
-        chosen_course = interaction.values[0] # Chose the first chosen result
+        chosen_course = interaction.values[0] # Choose the first chosen result
 
         # In my opinion, Embeds just look better so lets use an embed here!
         # -------------------------------------------------------------------------
@@ -108,14 +117,25 @@ class AssignmentTracker(commands.Cog):
         Sorts through all active assignments and puts them into an orderly list based on due date
 
         """
+        embed = disnake.Embed(
+            title="Current close to due date trackers:",
+            colour=disnake.Colour.blue()
+        )
+        active_trackers = Tracker.show_trackers()
+
+        #for record in active_trackers:
+        #    embed.add_field(name=f"Tracker #{record.id}: {record.course} | {record.assignment_name}", value=f"Due on {record.due_date} @ {record.due_time}")
+
+        await interaction.response.send_message(embed=embed)
+
 
     @commands.slash_command(description="Deletes a tracker based on ID")
     async def deletetracker(self, interaction: disnake.ApplicationCommandInteraction, tracker_id: int):
         """
         Takes a tracker ID, sorts through the database using the ID, and deletes the associated tracker.
         
-        :assign interaction: The interaction object
-        :assign tracker_id: The tracker's ID that we will use to delete it
+        :param interaction: The interaction object
+        :param tracker_id: The tracker's ID that we will use to delete it
         """
         if tracker_id < 0 or tracker_id is None:
             await interaction.response.send_message("Tracker ID is invalid! Please input a valid number!", ephemeral=True)
