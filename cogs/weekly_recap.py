@@ -1,10 +1,17 @@
 # Weekly recap written and developed by Hannah Alkenbrack <3
+# and William Wickenden
 
 # Import the disnake library to interact with the Discord API.
 # disnake is a Python library that allows us to create Discord bots.
-import disnake
+import disnake, json
 # Import necessary modules from disnake for commands and scheduled tasks.
 from disnake.ext import commands, tasks
+#used to show users options they can select for courses
+from typing import Literal
+
+with open('data/courses.json', 'r') as file:
+    data = json.load(file)
+
 # Import the datetime module to handle dates and times (for scheduling weekly tasks).
 import datetime
 
@@ -26,17 +33,8 @@ class weeklyRecapCommand(commands.Cog):
         """
         self.bot = bot  # Store the bot instance to be able to interact with Discord later.
         
-        # Dictionary that stores recaps for each course. The keys are course names, 
-        # and the values are the recap messages.
-        self.recap_data = {
-            "Care 10": "No updates; always set to BS.",  
-            "COMP 333": "No recap added yet.",  
-            "COMP 1081": "No recap added yet.",  
-            "COMP 220": "No recap added yet.",  
-            "COMP 206": "No recap added yet."   
-        }
-        
-        # List to store weekly update contributions. Users can contribute updates here.
+        # List to store weekly update contributions.
+        # Will need to link to database
         self.weekly_contributions = []
 
         # Start the background task that will send weekly recaps at the scheduled time.
@@ -44,7 +42,9 @@ class weeklyRecapCommand(commands.Cog):
         self.weekly_recap_task.start()
 
     @commands.slash_command(description="Add or update the weekly recap for a course.")
-    async def add_recap(self, inter: disnake.ApplicationCommandInteraction, course: str, recap: str):
+    async def add_recap(self, 
+                        inter: disnake.ApplicationCommandInteraction, 
+                        action: Literal['COMP206', 'COMP333', 'COMP1081', 'COMP220']): # type: ignore
         """
         This is a slash command that allows users to add or update the recap for a given course.
         
@@ -53,18 +53,27 @@ class weeklyRecapCommand(commands.Cog):
         - course: The name of the course for which the recap should be added or updated.
         - recap: The new recap message to be stored for the specified course.
         """
+            
+        #William Wickenden - Nov 10, 2024
+        #Added an append to the weekly contributions
+        #so it actually gets added to the array
+        self.weekly_contributions.append(f"{course}: {recap}")
         
-        # Check if the provided course exists in our recap_data dictionary.
-        if course in self.recap_data:
-            # If the course exists, update its recap with the new message.
-            self.recap_data[course] = recap  
-            # Send a confirmation message back to the user indicating the recap was updated.
-            self.weekly_contributions.append(f"{course}: {recap}")
-            await inter.response.send_message(f"Weekly recap for {course} updated!")
-        else:
-            # If the course is not found in the dictionary, inform the user.
-            await inter.response.send_message(f"Course '{course}' not found. Please enter a valid course.")
+        await inter.response.send_message(f"Weekly recap for {course} updated!")
+    
+    #testing -- Delete later
+    @commands.slash_command(description="Lists Courses Json")
+    async def list_json(self, inter: disnake.ApplicationCommandInteraction):
 
+        json_list_msg = ""
+        for course in course_list:
+            json_list_msg += course + "\n"
+        
+        await inter.response.send_message("json list test:\n\n" + json_list_msg)
+
+    @commands.slash_command(description="Lists Courses Json")
+    async def json_test(self, inter: disnake.ApplicationCommandInteraction):
+        await inter.response.send_message(course_list)
    
     @tasks.loop(hours=168)  # This task runs every 168 hours, which is equivalent to one week.
     async def weekly_recap_task(self):
@@ -91,9 +100,16 @@ class weeklyRecapCommand(commands.Cog):
     
     
 
-    #Write a list function for all current contributions
+    #William Wickenden - Nov 10, 2024
+    #Wrote a list function for all current contributions
+    #to the weekly recap
+
     @commands.slash_command(description="lists all current recap content")
     async def weekly_recap_list(self, inter: disnake.ApplicationCommandInteraction):
+        """
+        This slash command prints all of the currently loaded
+        tasks for the recap
+        """
         recap_list_msg = ""
         for contribution in self.weekly_contributions:
             recap_list_msg += contribution + "\n"
