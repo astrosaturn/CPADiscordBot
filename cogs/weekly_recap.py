@@ -12,6 +12,9 @@ from typing import Literal
 with open('data/courses.json', 'r') as file:
     data = json.load(file)
 
+course_list =  data.get('course', [])
+
+
 # Import the datetime module to handle dates and times (for scheduling weekly tasks).
 import datetime
 
@@ -41,10 +44,15 @@ class weeklyRecapCommand(commands.Cog):
         # This task will run automatically when the cog is loaded.
         self.weekly_recap_task.start()
 
+    #William Wickenden - Nov 10, 2024
+    #Adjusted so the weekly recap options show when writting command
+    #this is temp will need a different solution currently looking into
+    #fuzzywuzzy library
     @commands.slash_command(description="Add or update the weekly recap for a course.")
     async def add_recap(self, 
                         inter: disnake.ApplicationCommandInteraction, 
-                        action: Literal['COMP206', 'COMP333', 'COMP1081', 'COMP220']): # type: ignore
+                        action: Literal['COMP206', 'COMP333', 'COMP1081', 'COMP220', 'Care10'],
+                        recap: str): # type: ignore
         """
         This is a slash command that allows users to add or update the recap for a given course.
         
@@ -57,9 +65,9 @@ class weeklyRecapCommand(commands.Cog):
         #William Wickenden - Nov 10, 2024
         #Added an append to the weekly contributions
         #so it actually gets added to the array
-        self.weekly_contributions.append(f"{course}: {recap}")
+        self.weekly_contributions.append(f"{action}: {recap}")
         
-        await inter.response.send_message(f"Weekly recap for {course} updated!")
+        await inter.response.send_message(f"Weekly recap for {action} updated!")
     
     #testing -- Delete later
     @commands.slash_command(description="Lists Courses Json")
@@ -84,8 +92,7 @@ class weeklyRecapCommand(commands.Cog):
         # Get the current time in UTC
         now = datetime.datetime.utcnow()
 
-        # Check if it's Sunday at 9 AM (or any other time you want to send weekly recaps)
-        if now.weekday() == 6 and now.hour == 9:  # Weekday 6 is Sunday, and 9 is 9 AM.
+        if now.weekday() == 6 and now.hour == 9:
             channel = self.bot.get_channel(1304148534114914364)  # hardcoded channel ID  for channel ID (NEED TO CHANGE LATER MAYBE TO MANUALLY ENTER INSTEAD OF HARDCODED).
             recap_message = "Here are the weekly recaps:\n"
             
@@ -103,7 +110,6 @@ class weeklyRecapCommand(commands.Cog):
     #William Wickenden - Nov 10, 2024
     #Wrote a list function for all current contributions
     #to the weekly recap
-
     @commands.slash_command(description="lists all current recap content")
     async def weekly_recap_list(self, inter: disnake.ApplicationCommandInteraction):
         """
