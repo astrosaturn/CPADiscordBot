@@ -1,6 +1,6 @@
 import json
 import os
-from random import randint
+from random import randint, choice
 
 
 class StatusManager:
@@ -35,6 +35,6 @@ class StatusManager:
 
     @classmethod
     def get_random_status(cls) -> str:
-        return cls.statuses[randint(0, len(cls.statuses) - 1)]
+        return choice(cls.statuses)
 
 
