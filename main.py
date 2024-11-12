@@ -1,5 +1,5 @@
 """
-    Gravey Bot - by Eric Poroznik & Julian Seitz & Tyler Moore
+    Gravey Bot - by Eric Poroznik, Julian Seitz, Tyler Moore, Will Wickenden, and Hannah Alkenbrack
     A community-driven Discord bot created by students of St. Lawrence College (2023-2026).
 """
 
