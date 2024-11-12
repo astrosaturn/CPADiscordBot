@@ -1,13 +1,19 @@
 # Weekly recap written and developed by Hannah Alkenbrack <3
 # and William Wickenden
 
+#To-Do 
+#Make the announcement(task.loop) able to be assigned to a specific channel
+#this way when it's added to a new server one of the admins can assign it a server
+#to recap in
+
+#Actually connect to database
+
 # Import the disnake library to interact with the Discord API.
 # disnake is a Python library that allows us to create Discord bots.
-import disnake, json
+import disnake, discord, typing, json
 # Import necessary modules from disnake for commands and scheduled tasks.
 from disnake.ext import commands, tasks
 #used to show users options they can select for courses
-from typing import Literal
 
 with open('data/courses.json', 'r') as file:
     data = json.load(file)
@@ -51,24 +57,41 @@ class weeklyRecapCommand(commands.Cog):
     @commands.slash_command(description="Add or update the weekly recap for a course.")
     async def add_recap(self, 
                         inter: disnake.ApplicationCommandInteraction, 
-                        action: Literal['COMP206', 'COMP333', 'COMP1081', 'COMP220', 'Care10'],
-                        recap: str): # type: ignore
+                        course_name: str,
+                        recap: str):
         """
         This is a slash command that allows users to add or update the recap for a given course.
         
         Parameters:
         - inter: The interaction that triggered this command, used to send a response back to the user.
-        - course: The name of the course for which the recap should be added or updated.
+        - course_name: The name of the course for which the recap should be added or updated.
         - recap: The new recap message to be stored for the specified course.
         """
+
+        #course_name.disnake.OptionChoice('Idc10')
             
         #William Wickenden - Nov 10, 2024
         #Added an append to the weekly contributions
         #so it actually gets added to the array
-        self.weekly_contributions.append(f"{action}: {recap}")
+        self.weekly_contributions.append(f"{course_name}: {recap}")
         
-        await inter.response.send_message(f"Weekly recap for {action} updated!")
+        await inter.response.send_messagef("Weekly recap for {course_name} updated!")
+
     
+    
+
+
+    #Ideally will autocomplete the course name
+   # @add_recap.autocomplete("course_name")
+   # async def recap_autocompletion(
+   #     inter: disnake.ApplicationCommandInteraction,
+   #     current: str
+   # ) -> typing.List[disnake.app_commands.Choices[str,]]:
+   #     data = []
+   #     for course_choice in ['idc10', 'Comphundred', 'Chedda']:
+   #         data.append(disnake.app_commands.Choices(name=course_choice, value=course_choice))
+   #     return data
+
     #testing -- Delete later
     @commands.slash_command(description="Lists Courses Json")
     async def list_json(self, inter: disnake.ApplicationCommandInteraction):
