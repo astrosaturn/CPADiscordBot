@@ -38,7 +38,8 @@ class ProgressCommand(commands.Cog):
         #If its finished it appends to the progress report array.
         for assignment in self.assignment_table :
             if(assignment["course_id"] == course_id and assignment["is_finished"] == "0"):
-                   self.progress_report.append(f"{course_name}: {assignment["assignment_name"]}")
+                assignment_name = assignment["assignment_name"]
+                self.progress_report.append(f"{course_name}: {assignment_name}")
 
      
         await inter.response.send_message(self.progress_report)
