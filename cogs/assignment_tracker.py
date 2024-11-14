@@ -129,6 +129,50 @@ class AssignmentTracker(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
 
+    @commands.slash_command(description="Gets a tracker based in it's ID")
+    async def gettracker(self, interaction: disnake.ApplicationCommandInteraction, tracker_id: int):
+        """
+        Uses a tracker's ID to display all of it's information
+
+        :param tracker_id: The Tracker's ID to search for
+        """
+
+        tracker_info = Tracker.get_tracker_by_id(tracker_id)
+        try:
+            """
+            We will put the data in a try statement first, so if one returns none, we can error it out and not
+            crash the bot in the process. We will send the error to the user in an ephemeral message so it
+            only appears to them.
+            """
+            course = tracker_info['course']
+            name = tracker_info['assignment_name']
+            date = tracker_info['due_date']
+            time = tracker_info['due_time']
+
+            #Now, lets build an embed because they just look better
+            embed = disnake.Embed(
+                title=name,
+                description=course,
+                colour=disnake.Colour.gold(),
+                url="https://blackboard.sl.on.ca/ultra/calendar",
+                timestamp=datetime.now()
+            )
+
+            embed.set_author(
+                name=interaction.author.name,
+                icon_url=interaction.author.avatar.url,
+            )
+
+            embed.add_field(name=f"Due on {date}", value=f"@ {time}")
+            
+            embed.set_footer(text="CPA Discord")
+
+            #Now send the embed.
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            await interaction.response.send_message(f"There was an exception: {e}", ephemeral=True)
+        
+
     @commands.slash_command(description="Deletes a tracker based on ID")
     async def deletetracker(self, interaction: disnake.ApplicationCommandInteraction, tracker_id: int):
         """
@@ -141,7 +185,6 @@ class AssignmentTracker(commands.Cog):
             await interaction.response.send_message("Tracker ID is invalid! Please input a valid number!", ephemeral=True)
 
 
-        # Now, lets attempt to delete the tracker
         try:
             Tracker.delete_tracker(tracker_id)
             await interaction.response.send_message("Tracker successfully deleted")
