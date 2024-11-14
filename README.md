@@ -1,4 +1,4 @@
-# Gravey 
+# Gravey
 
 Gravey is a community-driven Discord bot developed and maintained by the CPA @ SLC graduating class of 2026. 
 The bot, themed after one of our professors, is as a fun side project for our class and aims to provide our peers with helpful utilities, programming resources, and course-related updates.
