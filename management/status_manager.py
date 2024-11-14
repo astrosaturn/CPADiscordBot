@@ -1,13 +1,24 @@
 import json
 import os
-from random import randint
-
+from random import choice
 
 class StatusManager:
+    """
+    StatusManager is a class that manages the statuses of the bot, it is a static class.
+
+    Attributes:
+        statuses: list[str] - a list of statuses that the bot can choose from
+    """
     statuses: list[str] = []
 
     @classmethod
     def initialize(cls, filename: str):
+        """
+        Initialize the statuses of the bot by loading statuses from a json file
+
+        :param filename: the filename of the json file
+        :return:
+        """
         if not os.path.exists(filename):
             # create file if not exists
             with open(filename, 'w') as f:
@@ -35,6 +46,10 @@ class StatusManager:
 
     @classmethod
     def get_random_status(cls) -> str:
-        return cls.statuses[randint(0, len(cls.statuses) - 1)]
+        """
+        Retrieves a random status from the list of statuses
 
+        :return: a random status
+        """
 
+        return choice(cls.statuses)

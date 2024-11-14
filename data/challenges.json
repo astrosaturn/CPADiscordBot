@@ -1,0 +1,20 @@
+{
+    "challenges": [
+        {
+            "category": "COMP 333",
+            "description": "Object Oriented C++",
+            "challenge": [
+                {
+                    "title": "**Library System**",
+                    "description": "Implement a simple class structure for a library system. Create classes for `Book`, `Author`, and `Library`. Each `Book` should have attributes like title, author, and ISBN. Each `Author` should have a name and a list of books they've written. The `Library` should contain a collection of books. Bonus: Implement methods to add and remove books from the library.",
+                    "difficulty": "Easy"
+                },
+                {
+                    "title": "**Pointer Fun**",
+                    "description": "Create a program that demonstrates the use of pointers in C++. Create a class that contains a pointer to an integer. Implement methods to set and get the value of the integer. Create an instance of the class and demonstrate how to use the pointer to access and modify the integer.",
+                    "difficulty": "Easy"
+                }
+            ]
+        }
+    ]
+}

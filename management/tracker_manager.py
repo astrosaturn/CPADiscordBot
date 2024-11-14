@@ -1,5 +1,6 @@
 from models.db.database import *
 from models.db.models.tracker import TrackerModel
+from sqlalchemy.orm import Session
 
 
 class Tracker:
@@ -10,7 +11,8 @@ class Tracker:
     
     Methods:
         create_tracker: creates a tracker and inserts it into the database
-
+        get_tracker_by_id: returns all of a tracker's data from an id
+        delete_tracker: deletes a tracker from a given id
 
     Attributes:
         course: string | Name of the assignment's course
@@ -59,7 +61,27 @@ class Tracker:
 
         return active_trackers
         
+    @classmethod
+    def get_tracker_by_id(self, tracker_id: int) -> dict | None:
+        try:
+            session = Database.create_session()
+            tracker_info = session.get(TrackerModel, tracker_id)
 
+            print(f"Query result for tracker_id {tracker_id}: {tracker_info}")
+
+            if tracker_info: # If we successfully find a tracker with this id, execute
+                data = {
+                    "id": tracker_info.id,
+                    "course": tracker_info.course,
+                    "assignment_name": tracker_info.assignment_name,
+                    "due_date": tracker_info.due_date,
+                    "due_time": tracker_info.due_time
+                }
+                return data
+            else:
+                return None
+        finally:
+            session.close()
 
 
     @classmethod

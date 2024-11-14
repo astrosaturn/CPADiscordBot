@@ -28,7 +28,7 @@ The following features are in development. Completed features are checked off.
 ### Educational Tools
 - [x] **Daily Programming Tips & Resources**  
   A curated feed of programming knowledge to help everyone grow their skills.
-- [ ] **Daily Coding Challenges**  
+- [x] **Daily Coding Challenges**  
   Coding exercises to get more practice with our current coursework.
 - [x] **ChatGPT Code Review (OpenAI API)**  
   AI code reviews to give feedback and suggestions on code quality.
