@@ -23,6 +23,8 @@ The following features are in development. Completed features are checked off.
 - [ ] **Weekly Recap**
   List a weekly recap of committed content to the bot,
   students felt was important.
+- [ ] **Help Command**
+  A command that list and tells you how each command works for the bot.
 ### Educational Tools
 - [x] **Daily Programming Tips & Resources**  
   A curated feed of programming knowledge to help everyone grow their skills.
