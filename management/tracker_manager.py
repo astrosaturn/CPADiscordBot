@@ -22,9 +22,6 @@ class Tracker:
 
     """
 
-
-
-    no_trackers = 0
     @classmethod
     def create_tracker(self, i_course_name:str, i_assignment_name:str, i_due_date: str, i_due_time: str = None):
         """
