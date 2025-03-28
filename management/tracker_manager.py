@@ -13,6 +13,7 @@ class Tracker:
         create_tracker: creates a tracker and inserts it into the database
         get_tracker_by_id: returns all of a tracker's data from an id
         delete_tracker: deletes a tracker from a given id
+        show_tracker: Gets 10 trackers in order of due date.
 
     Attributes:
         course: string | Name of the assignment's course

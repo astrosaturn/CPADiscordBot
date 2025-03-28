@@ -10,7 +10,7 @@
 
 # Import the disnake library to interact with the Discord API.
 # disnake is a Python library that allows us to create Discord bots.
-import disnake, discord, typing, json
+import disnake, typing, json
 # Import necessary modules from disnake for commands and scheduled tasks.
 from disnake.ext import commands, tasks
 #used to show users options they can select for courses
