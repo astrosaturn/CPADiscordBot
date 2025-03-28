@@ -1,7 +1,7 @@
 # How do I participate?
 That is what this guide will tell you!
 
-## First you need to install [Python.](https://www.python.org/downloads/) 
+## First you need to install [Python.](https://www.python.org/downloads/) 3.12.6
 After Python is installed, you will need to install the dependencies in the dependencies.md file using pip, its just like NPM in COMP206.
 
 I also recommend the Python extension on Visual Studio Code.
@@ -23,7 +23,7 @@ After you have cloned it you now have the bot on your computer!
 
 ## I'm all set up to start, what now?
 
-First run the terminal, and run `pip install -r requirements.txt`. 
+First run the terminal, and run `pip install poetry`. 
 
 If pip *doesn't work*:
 
@@ -34,17 +34,14 @@ If pip *doesn't work*:
 
 Then click install, restart VSCode, and rerun the command.
 
-Now you need to make a .env file. Just make a new file in the ./CPADiscordBot directory called ".env" or run main.py and it will be created for you.
+Once the command works, run `poetry install`.
+Then all the dependiencies should install automatically.
+
+Now you need to make a .env file. Just copy the .envexample file and rename it to just `.env`.
 
 .env files are special files that are used by developers to hide important information, such as the bot's token (which you can find pinned in general in the development server). This is so people cant open our public repo and yank the token and start using it for nefarious purposes.
 
-Once you make the .env file, put in `DISCORD_TOKEN = {token}` into the file, replacing {token} with the token from the server, and then run the bot!
-
-To run the bot you may either:
-
-A. Open main.py and click the play button at the top right of VSCode
-
-B. Open the terminal and type `python main.py`
+To run the bot you must run the command `poetry run python main.py`.
 
 If the bot successfully starts, you will get a message telling you that the script has successfully logged on to Gravey!
 
@@ -53,17 +50,11 @@ We ask that you make a pull request so we can review the code and then bring it 
 
 How to make a pull request:
 
-Open the terminal in Visual Studio Code and do the following:
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 
-Make sure you aren't on the main branch, we don't want to make a pull request on the main branch.
-`git checkout -b your-feature-branch`
+Or
 
-Then commit your changes.
-`git add .`
-`git commit -m "Put a descriptive sentence about your changes here"`
-
-And finally push the changes to your new remote repository.
-`git push origin your-feature-branch`
+In the version control tab, press the plus to stage your changes, add a message, then next to the commit button press the dropdown arrow and press `Commit & Create Pull Request`
 
 Either Eric or Julian will review your pull request, and we will give you our thoughts on it, any improvements to be made, then we will pull it into the repo!
 

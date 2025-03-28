@@ -13,7 +13,7 @@ The following features are in development. Completed features are checked off.
 ### General Utilities
 - [x] **Timed Reminders**  
   For assignment deadlines, class schedules, and other important dates.
-- [ ] **Assignment Tracker**  
+- [x] **Assignment Tracker**  
   Monitor assignment's due dates, and send notifications to keep everyone on track.
 - [ ] **Progress Alerts**  
   Notify those who haven’t submitted their work as deadlines approach.
