@@ -37,7 +37,7 @@ The following features are in development. Completed features are checked off.
 - [ ] **Syntax and Command Cheat Sheets**
   Will display Syntax and Command cheat sheets
 ### Professional Development
-- [ ] **Mock Interview Practice**  
+- [x] **Mock Interview Practice**  
   Potential integration with ChatGPT to simulate technical interviews.
 - [ ] **Stack Overflow/Documentation Lookup**  
   A quick reference tool to search Stack Overflow and other documentation directly from Discord, with Gravey.
