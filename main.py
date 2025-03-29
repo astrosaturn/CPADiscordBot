@@ -1,5 +1,5 @@
 """
-    Gravey Bot - by Eric Poroznik, Julian Seitz, Tyler Moore, Will Wickenden, and Hannah Alkenbrack
+    Gravey Bot - by Eric Poroznik, Julian Seitz, Tyler Moore, Will Wickenden, Hannah Alkenbrack, Matthew Lavelle
     A community-driven Discord bot created by students of St. Lawrence College (2023-2026).
 """
 
@@ -20,7 +20,6 @@ Database.create_engine('sqlite:///data/database.sqlite')
 # import db models
 from models.db.models.reminder import Reminder
 from models.db.models.stats import Stats
-from models.db.models.tracker import TrackerModel
 
 Database.base.metadata.create_all(Database.engine)
 

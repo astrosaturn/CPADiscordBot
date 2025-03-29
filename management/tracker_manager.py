@@ -1,6 +1,5 @@
 from models.db.database import *
-from models.db.models.tracker import TrackerModel
-from sqlalchemy.orm import Session
+from models.db.models.trackerModel import TrackerModel
 
 
 class Tracker:
@@ -33,53 +32,33 @@ class Tracker:
         :attribute due_date: The date the assignment is due
         :attribute due_time: The time its due at (If none, defaults to 23:59)
         """
-    
-
-        # Now create a session for the database.
-        session = Database.create_session()
         try:
-            TrackerModel.insert(i_course_name, i_assignment_name, i_due_date, i_due_time, session)
-            session.commit()
+            TrackerModel.insert(i_course_name, i_assignment_name, i_due_date, i_due_time)
             print(f"Tracker successfully created for: {i_course_name}, {i_assignment_name} due on {i_due_date} at {i_due_time}")
         except Exception as e:
-            session.rollback()
             print(f"OOPS! Database fucky wucky {e}")
-        finally:
-            session.close()
         
     @classmethod
     def show_trackers(self):
         """
         Retrieves 10 trackers from the DB in order of due date
         """
-        session = Database.create_session()
-        active_trackers = TrackerModel.get_trackers(session)
-        session.commit()
-        session.close()
+        active_trackers = TrackerModel.get_trackers()
 
         return active_trackers
         
     @classmethod
-    def get_tracker_by_id(self, tracker_id: int) -> dict | None:
+    def get_tracker_by_id(self, tracker_id: int):
         try:
-            session = Database.create_session()
-            tracker_info = session.get(TrackerModel, tracker_id)
-
-            print(f"Query result for tracker_id {tracker_id}: {tracker_info}")
-
-            if tracker_info: # If we successfully find a tracker with this id, execute
-                data = {
-                    "id": tracker_info.id,
-                    "course": tracker_info.course,
-                    "assignment_name": tracker_info.assignment_name,
-                    "due_date": tracker_info.due_date,
-                    "due_time": tracker_info.due_time
-                }
-                return data
+            tracker = TrackerModel.get_tracker(tracker_id)
+            if tracker:
+                return tracker
             else:
+                print(f"Tracker with ID {tracker_id} not found.")
                 return None
-        finally:
-            session.close()
+        except Exception as e:
+            print(f"OOPS! There was an issue getting a tracker: {e}")
+            return None
 
 
     @classmethod
@@ -89,15 +68,10 @@ class Tracker:
 
         :attribute tracker_id: Takes a tracker_id and deletes the tracker where the id is.
         """
-        session = Database.create_session()
         try:
-            TrackerModel.remove(tracker_id, session)
-            session.commit()
+            TrackerModel.remove(tracker_id)
         except Exception as e:
-            session.rollback()
             print(f"OOPS! Database fucky wucky {e}")
-        finally:
-            session.close()
 
 
     

@@ -1,6 +1,6 @@
 import disnake, json
 from disnake.ext import commands, tasks
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 
@@ -31,7 +31,7 @@ class AssignmentTracker(commands.Cog):
 
 
     @commands.slash_command(description="Add an assignment to the tracker")
-    async def addtotracker(self, interaction: disnake.ApplicationCommandInteraction,
+    async def addtracker(self, interaction: disnake.ApplicationCommandInteraction,
                            assign_name: str, i_date: str, i_time:str = None):
         """
         Adds an assignment to track to the database
@@ -117,16 +117,27 @@ class AssignmentTracker(commands.Cog):
         Sorts through all active assignments and puts them into an orderly list based on due date
 
         """
-        embed = disnake.Embed(
-            title="Current close to due date trackers:",
-            colour=disnake.Colour.blue()
-        )
+
         active_trackers = Tracker.show_trackers()
 
-        #for record in active_trackers:
-        #    embed.add_field(name=f"Tracker #{record.id}: {record.course} | {record.assignment_name}", value=f"Due on {record.due_date} @ {record.due_time}")
+        if active_trackers is None:
+            await interaction.response.send_message("No active trackers found!")
+            return
+        else:
+            embed = disnake.Embed(
+                title="Current close to due date trackers:",
+                colour=disnake.Colour.blue()
+            )
 
-        await interaction.response.send_message(embed=embed)
+            for record in active_trackers:
+                id = record[0]
+                course = record[1]
+                name = record[2]
+                date = record[3]
+                time = record[4]
+                embed.add_field(name=f"Tracker #{id}: {course} | {name}", value=f"Due on {date} @ {time}", inline=False)
+
+            await interaction.response.send_message(embed=embed)
 
 
     @commands.slash_command(description="Gets a tracker based in it's ID")
@@ -138,16 +149,23 @@ class AssignmentTracker(commands.Cog):
         """
 
         tracker_info = Tracker.get_tracker_by_id(tracker_id)
+
+        # If the can't find the tracker, return an error message that only the author can see.
+        if tracker_info is None:
+            await interaction.response.send_message("Tracker ID is invalid! Please input a valid number!", ephemeral=True)
+            return
+
         try:
             """
             We will put the data in a try statement first, so if one returns none, we can error it out and not
             crash the bot in the process. We will send the error to the user in an ephemeral message so it
             only appears to them.
             """
-            course = tracker_info['course']
-            name = tracker_info['assignment_name']
-            date = tracker_info['due_date']
-            time = tracker_info['due_time']
+            id = tracker_info[0]
+            course = tracker_info[1]
+            name = tracker_info[2]
+            date = tracker_info[3]
+            time = tracker_info[4]
 
             #Now, lets build an embed because they just look better
             embed = disnake.Embed(
@@ -163,7 +181,7 @@ class AssignmentTracker(commands.Cog):
                 icon_url=interaction.author.avatar.url,
             )
 
-            embed.add_field(name=f"Due on {date}", value=f"@ {time}")
+            embed.add_field(name=f"Due on:", value=f"{date} @ {time}")
             
             embed.set_footer(text="CPA Discord")
 
