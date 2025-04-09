@@ -2,7 +2,7 @@ import disnake, json
 from disnake.ext import commands, tasks
 from datetime import datetime
 
-
+from models.db.models.trackerModel import TrackerModel
 
 from management.tracker_manager import Tracker
 from models.db.database import *
@@ -17,6 +17,7 @@ class AssignmentTracker(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
+        self.checktracker.start()
    
     """
     Format:
@@ -112,7 +113,7 @@ class AssignmentTracker(commands.Cog):
 
     
     @commands.slash_command(description="Check for any active assignments due")
-    async def viewtrackers(self, interaction: disnake.ApplicationCommandInteraction):
+    async def viewalltrackers(self, interaction: disnake.ApplicationCommandInteraction):
         """
         Sorts through all active assignments and puts them into an orderly list based on due date
 
@@ -141,7 +142,7 @@ class AssignmentTracker(commands.Cog):
 
 
     @commands.slash_command(description="Gets a tracker based in it's ID")
-    async def gettracker(self, interaction: disnake.ApplicationCommandInteraction, tracker_id: int):
+    async def gettrackerbyid(self, interaction: disnake.ApplicationCommandInteraction, tracker_id: int):
         """
         Uses a tracker's ID to display all of it's information
 
@@ -210,9 +211,63 @@ class AssignmentTracker(commands.Cog):
             await interaction.response.send_message(f"There was an exception! {e}", ephemeral=True)
         
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(seconds=10)
     async def checktracker(self):
-        now = datetime.now()
+        print("Checking trackers..")
+        announcement_channel = self.bot.get_channel(1304652175833825311)
+
+
+        current_date = datetime.now().date().strftime('%Y-%mm-%dd')
+        current_time = datetime.now().time().strftime('%H:%M')
+        
+        active_trackers = Tracker.show_trackers()
+
+        if active_trackers is None:
+            return
+        
+        if announcement_channel is None:
+            print(f"There was an issue finding the announcement channel: {announcement_channel}")
+            return
+
+        for record in active_trackers:
+            id = record[0]
+            course = record[1]
+            name = record[2]
+            date = record[3]
+            time = record[4]
+            
+            """
+            due_date = datetime.strptime(date, '%Y-%mm-%dd')
+            due_time = datetime.strptime(time, '%H:%M')
+            """
+
+            due_date = datetime.fromisoformat(date)
+            due_time = datetime.fromisoformat(time)
+
+            if current_date >= due_date:
+                #It's due today.
+                await announcement_channel.send(f"Assignment ID #{id} | {name} for class {course} is due today at {time}! Lock in!")
+                
+                if current_time >= due_time:
+                    await announcement_channel.send(f"Assignment ID #{id} | {name} for class {course} is now overdue!")
+                    #It's overdue.
+                    TrackerModel.remove(id) # Delete the tracker.
+               
+            else:
+                return
+            #Nothing to do.
+
+
+
+    @checktracker.before_loop
+    async def wait_for_bot(self):
+        await self.bot.wait_until_ready()
+
+
+            
+
+            
+            
 
 def setup(bot):
     bot.add_cog(AssignmentTracker(bot))
